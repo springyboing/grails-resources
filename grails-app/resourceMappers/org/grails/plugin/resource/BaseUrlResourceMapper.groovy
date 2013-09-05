@@ -41,7 +41,7 @@ class BaseUrlResourceMapper {
     }
 
     void verifySameBaseUrlForAllModulesInBundle(AggregatedResourceMeta bundle, Map config) {
-        def moduleNames = bundle.resources.collect this.&getModuleName
+        def moduleNames = bundle.resources.collect { this.getModuleName(it) }
         def baseUrlsForBundleModules = moduleNames.collectEntries { [it, config.modules[it] ?: config.default] }
         def uniqueUrls = baseUrlsForBundleModules.values().unique(false)
         if (uniqueUrls.size() != 1) {
